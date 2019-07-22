@@ -3,7 +3,6 @@ package com.ruvio.reawrite.kategori;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +11,22 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.ruvio.reawrite.KategoryActivity;
 import com.ruvio.reawrite.R;
+import com.ruvio.reawrite.adapter.SessionManager;
 import com.ruvio.reawrite.kategori.api.KategoriItem;
 import com.ruvio.reawrite.kategori.api.KategoriServices;
 import com.ruvio.reawrite.kategori.api.ResponseKategori;
 import com.ruvio.reawrite.network.InitRetro;
 
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +44,11 @@ public class KategoriFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =   inflater.inflate(R.layout.kategori_frag, container, false);
+
+        ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ab.show();
+        SessionManager sm = new SessionManager(getActivity());
+        sm.checkLogin();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleKategori);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -100,7 +105,6 @@ public class KategoriFragment extends Fragment {
                     progressDismiss();
                     boolean msg = response.body().isMsg();
                     if (msg){
-                        Log.d("hasil", "onResponse: " +response.body().getResult().toString());
                         KategoriAdapter kategoriAdapter = new KategoriAdapter(kategoriItemList);
                         recyclerView.setAdapter(kategoriAdapter);
                     }
@@ -140,12 +144,13 @@ public class KategoriFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull KategoriAdapter.MyViewHolder holder, final int position) {
-            holder.mTextViewId.setText(kategoriItems.get(position).getKategori());
+            holder.mTextViewId.setText(kategoriItems.get(position).getNamaKategori());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getContext(), KategoryActivity.class);
-                    intent.putExtra("ID_Kategori", kategoriItems.get(position).getKategori());
+                    Intent intent = new Intent(getContext(), ByIdActivity.class);
+                    intent.putExtra("ID_KATEGORI", kategoriItems.get(position).getIdKategori());
+                    intent.putExtra("KATEGORI_NAME", kategoriItems.get(position).getNamaKategori());
                     startActivity(intent);
                 }
             });
@@ -163,5 +168,8 @@ public class KategoriFragment extends Fragment {
                 mTextViewId = (TextView) itemView.findViewById(R.id.txtKategori);
             }
         }
+
+
     }
+
 }

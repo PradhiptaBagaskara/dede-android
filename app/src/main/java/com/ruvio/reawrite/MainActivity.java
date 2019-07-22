@@ -1,38 +1,58 @@
 package com.ruvio.reawrite;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.ruvio.reawrite.activity.MasukanActivity;
+import com.ruvio.reawrite.activity.ProfilSettingActivity;
+import com.ruvio.reawrite.adapter.SessionManager;
 import com.ruvio.reawrite.home.HomeFragment;
 import com.ruvio.reawrite.kategori.KategoriFragment;
 import com.ruvio.reawrite.profile.ProfileFragment;
 import com.ruvio.reawrite.tulis.TulisFragment;
 
+
 public class MainActivity extends AppCompatActivity {
     private Fragment fragment;
     SwipeRefreshLayout swp;
     private int aktifFragment;
+    SessionManager sm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayShowHomeEnabled(true);
-        ab.setLogo(R.drawable.ic_menu_camera);
-        ab.setDisplayUseLogoEnabled(true);
 
+        ActionBar ab = getSupportActionBar();
         ab.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorAccent)));
         ab.show();
+
+        sm = new SessionManager(MainActivity.this);
+        sm.checkLogin();
+        if (sm.Login()){
+            halaman(0);
+
+        }
+
+
+
 
         swp = (SwipeRefreshLayout) findViewById(R.id.swiprefresh);
 
@@ -40,15 +60,14 @@ public class MainActivity extends AppCompatActivity {
         setActionBar(0);
 
 //        Set Default Halaman
-        halaman(0);
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
 
 //        Init halaman Untuk menu Bottom Nav
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_white_24dp, "Home"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_book_white_24dp, "Kategori"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_music_note_white_24dp, "Tulis"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_tv_white_24dp, "Profil"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_tulis, "Tulis"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_person, "Profil"))
                 .setFirstSelectedPosition(0)
                 .initialise();
 //        bottomNavigationBar.setAutoHideEnabled(false);
@@ -83,18 +102,33 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(title);
     }
     public void setActionBar(int position){
+        ActionBar ab = getSupportActionBar();
+
         switch (position){
             case 0:
-                setActionBarTitle("Reawrite");
+                ab.setDisplayShowHomeEnabled(true);
+                ab.setLogo(R.drawable.ic_toolbar);
+                ab.setDisplayUseLogoEnabled(true);
+                ab.setDisplayShowTitleEnabled(false);
+//                setActionBarTitle("Reawrite");
                 break;
             case 1:
-                setActionBarTitle("Kategori");
+                ab.setDisplayShowHomeEnabled(true);
+                ab.setLogo(R.drawable.ic_toolbar);
+                ab.setDisplayUseLogoEnabled(true);
+                ab.setDisplayShowTitleEnabled(false);
                 break;
             case 2:
-                setActionBarTitle("Tulis");
+                ab.setDisplayShowHomeEnabled(true);
+                ab.setLogo(R.drawable.ic_toolbar);
+                ab.setDisplayUseLogoEnabled(true);
+                ab.setDisplayShowTitleEnabled(false);
                 break;
             case 3:
-                setActionBarTitle("Profil");
+                ab.setDisplayShowHomeEnabled(true);
+                ab.setLogo(R.drawable.ic_toolbar);
+                ab.setDisplayUseLogoEnabled(true);
+                ab.setDisplayShowTitleEnabled(false);
                 break;
         }
     }
@@ -139,5 +173,53 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.setting) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//
+//        MenuItem settingsItem = menu.findItem(R.id.setting);
+//        // set your desired icon here based on a flag if you like
+//        settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_settings));
+//
+//        return super.onPrepareOptionsMenu(menu);
+//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
 
+        menuInflater.inflate(R.menu.menu_umum, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.btnMasukan:
+                 intent =new Intent(this, MasukanActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.settingProfil:
+                intent =new Intent(this, ProfilSettingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btnLogout:
+                intent =new Intent(this, ProfilSettingActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return false;
+    }
 }

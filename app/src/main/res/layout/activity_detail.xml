@@ -43,7 +43,7 @@
                             android:layout_height="120dp"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/profil"
+                            android:src="@drawable/ic_person"
                             android:layout_marginRight="30dp"/>
 
                         <LinearLayout
@@ -57,17 +57,18 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp">
                                 <ImageView
-                                    android:id="@+id/userInfo"
+                                    android:id="@+id/imgAuthor"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_centerVertical="true"
                                     android:layout_marginRight="10dp"
                                     android:src="@drawable/ic_person"/>
                                 <TextView
+                                    android:id="@+id/author"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_toEndOf="@id/userInfo"
+                                    android:layout_toEndOf="@id/imgAuthor"
                                     android:textSize="15sp"
                                     android:text="Author"
                                     />
@@ -85,15 +86,16 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginRight="10dp"
                                     android:src="@drawable/ic_dilihat"/>
+
                                 <TextView
                                     android:id="@+id/viewText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginTop="0dp"
                                     android:layout_toEndOf="@id/thumbView"
-                                    android:textSize="15sp"
                                     android:text="Dibaca"
-                                    />
+                                    android:textSize="15sp" />
 
                             </RelativeLayout>
                             <RelativeLayout
@@ -135,6 +137,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp">
                         <Button
+                            android:id="@+id/btnBacaCerita"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/colorAccent"
@@ -176,6 +179,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp">
                     <TextView
+                        android:id="@+id/diskripsi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 

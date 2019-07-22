@@ -2,22 +2,39 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ruvio.reawrite">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
-        android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".KategoryActivity">
-        </activity>
+        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".activity.ProfilSettingActivity" />
+        <activity android:name=".activity.MasukanActivity" />
         <activity
-            android:name=".activity.SettingsActivity"
-            android:label="@string/title_activity_settings" />
+            android:name=".tulis.TulisCerita"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".cerita.BacaCeritaActivity"
+            android:label="@string/title_activity_baca_cerita"
+            android:parentActivityName=".cerita.DetailCeritaActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ruvio.reawrite.cerita.DetailCeritaActivity" />
+        </activity>
+        <activity android:name=".cerita.DetailCeritaActivity" />
+        <activity android:name=".kategori.ByIdActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
