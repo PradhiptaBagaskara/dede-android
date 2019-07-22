@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sm.logout();
+//                sm.logout();
             }
         });
 

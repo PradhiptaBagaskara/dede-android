@@ -1,0 +1,11 @@
+#Internal package file, do not edit.
+#Mon Jul 22 20:06:09 ICT 2019
+1.base=D\:\\andro\\reawrite\\app\\build\\intermediates\\merged_assets\\release\\out
+0.baseType=DIRECTORY
+1.baseType=DIRECTORY
+count=2
+1.set=ASSET
+0.path=classes.dex
+0.set=DEX
+0.base=D\:\\andro\\reawrite\\app\\build\\intermediates\\dex\\release\\mergeDexRelease\\out
+1.path=fonts/walkway.ttf

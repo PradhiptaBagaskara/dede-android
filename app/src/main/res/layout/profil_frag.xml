@@ -91,7 +91,7 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:background="@drawable/button_select"
-            android:text="logout"
+            android:text="followers"
             android:textColor="@color/content" />
 
 
