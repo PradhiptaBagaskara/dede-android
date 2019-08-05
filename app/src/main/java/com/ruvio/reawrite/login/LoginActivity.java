@@ -153,6 +153,8 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<ResponseUser> call, Throwable t) {
                             progressDismiss();
+                            t.printStackTrace();
+
                             Toast.makeText(getApplicationContext(), "Bad Connection!", Toast.LENGTH_LONG).show();
                         }
                     });

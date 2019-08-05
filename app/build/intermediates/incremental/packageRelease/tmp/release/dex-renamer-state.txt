@@ -1,4 +1,0 @@
-#Mon Jul 22 20:06:08 ICT 2019
-base.0=D\:\\andro\\reawrite\\app\\build\\intermediates\\dex\\release\\mergeDexRelease\\out
-path.0=classes.dex
-renamed.0=classes.dex

@@ -216,8 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.btnLogout:
-                intent =new Intent(this, ProfilSettingActivity.class);
-                startActivity(intent);
+                sm.logout();
                 break;
         }
         return false;
