@@ -54,8 +54,8 @@ public class ByIdActivity extends AppCompatActivity {
         kategoriServices = InitRetro.InitApi().create(KategoriServices.class);
         recyclerView = (RecyclerView) findViewById(R.id.ceritaView);
 
-        sm = new SessionManager(ByIdActivity.this);
-        sm.checkLogin();
+//        sm = new SessionManager(ByIdActivity.this);
+//        sm.checkLogin();
         gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         showProgress();
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -78,14 +78,12 @@ public class ByIdActivity extends AppCompatActivity {
         final String kategori;
         String key;
         String id_kategori;
-        sesi = sm.getLogged();
-        key = sesi.get(sm.SES_TOKEN);
 
         Bundle extras = getIntent().getExtras();
         kategori = extras.getString("KATEGORI_NAME");
 
         id_kategori = extras.getString("ID_KATEGORI");
-        Call<ResponseById> getResponse = kategoriServices.postById(id_kategori, key);
+        Call<ResponseById> getResponse = kategoriServices.postById(id_kategori);
         getResponse.enqueue(new Callback<ResponseById>() {
             @Override
             public void onResponse(Call<ResponseById> call, Response<ResponseById> response) {

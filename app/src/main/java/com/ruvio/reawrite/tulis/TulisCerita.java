@@ -7,15 +7,23 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.chinalwb.are.AREditor;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.ruvio.reawrite.MainActivity;
 import com.ruvio.reawrite.R;
 import com.ruvio.reawrite.adapter.SessionManager;
+import com.ruvio.reawrite.firebase.Common;
+import com.ruvio.reawrite.firebase.NotifService;
+import com.ruvio.reawrite.firebase.Notification;
+import com.ruvio.reawrite.firebase.Respon;
+import com.ruvio.reawrite.firebase.Sender;
 import com.ruvio.reawrite.network.ApiServices;
 import com.ruvio.reawrite.network.InitRetro;
 
@@ -36,11 +44,15 @@ public class TulisCerita extends AppCompatActivity {
     KProgressHUD hud;
     SessionManager sm;
     HashMap<String,String> map;
+    NotifService fcmService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tulis_cerita);
+
+        Window window = TulisCerita.this.getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(getApplicationContext(),R.color.content));
 
         apiServices = InitRetro.InitApi().create(ApiServices.class);
         Bundle extra = getIntent().getExtras();
@@ -49,6 +61,8 @@ public class TulisCerita extends AppCompatActivity {
         id_kategori = extra.getString("id_kategori");
         diskripsi = extra.getString("diskripsi");
         id_user = extra.getString("id_user");
+
+        fcmService = Common.getFCMClient();
 
 
         sm = new SessionManager(TulisCerita.this);
@@ -89,7 +103,6 @@ public class TulisCerita extends AppCompatActivity {
                 String auth_key = map.get(sm.SES_TOKEN);
                 isi = arEditor.getHtml();
 
-
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
                 RequestBody auth = RequestBody.create(MediaType.parse("text/plain"), auth_key);
                 RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), id_user);
@@ -110,12 +123,33 @@ public class TulisCerita extends AppCompatActivity {
                             if (status){
                                 Log.d("sukses", "onResponse: sukses aplut");
                                 Toast.makeText(getApplicationContext(), "sukses terpost", Toast.LENGTH_LONG).show();
+
+
 //                                Intent intent = new Intent(TulisCerita.this, )
                                 finish();
                             }else{
                                 Toast.makeText(getApplicationContext(), "cek field yg kurang", Toast.LENGTH_LONG).show();
 
                             }
+
+                            Notification notification = new Notification(judul,diskripsi);
+                            Sender sender = new Sender("/topics/news", notification);
+                            fcmService.sendNotification(sender).enqueue(new Callback<Respon>() {
+                                @Override
+                                public void onResponse(Call<Respon> call, Response<Respon> response) {
+                                    if (response.isSuccessful()){
+//                                        Toast.makeText(getApplicationContext(), "sukses postnotif", Toast.LENGTH_LONG).show();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<Respon> call, Throwable t) {
+                                    t.printStackTrace();
+
+                                }
+                            });
+
 
                         }
                     }

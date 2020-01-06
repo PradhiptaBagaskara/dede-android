@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,7 @@ public class TulisFragment extends Fragment {
     Bitmap bm;
     SessionManager sm;
     HashMap map;
+    String idUser;
 
 
     @Override
@@ -78,6 +80,8 @@ public class TulisFragment extends Fragment {
         sm = new SessionManager(getActivity());
         sm.checkLogin();
         map = sm.getLogged();
+        idUser = map.get(sm.SES_ID).toString();
+
 
         mySpinner = (MaterialBetterSpinner) view.findViewById(R.id.spinnerku);
         kategoriServices = InitRetro.InitApi().create(KategoriServices.class);
@@ -136,7 +140,7 @@ public class TulisFragment extends Fragment {
                 diskripsi.setError("diskripsi Harus Di isi!");
 
             }else {
-                String idku = map.get(sm.SES_ID).toString();
+                String idku = idUser;
                 Intent intent = new Intent(getActivity(), TulisCerita.class);
                 intent.putExtra("id_kategori", id_kat);
                 intent.putExtra("id_user", idku);
@@ -210,7 +214,10 @@ public class TulisFragment extends Fragment {
         }, 500);
     }
     private void tampilKategori(){
-        Call<ResponseKategori> getResponse = kategoriServices.getKategoriResponse();
+        Call<ResponseKategori> getResponse = kategoriServices.getKategoriForm(idUser);
+        progressDismiss();
+        Log.d("sesid: ", idUser);
+
         getResponse.enqueue(new Callback<ResponseKategori>() {
             @Override
             public void onResponse(Call<ResponseKategori> call, Response<ResponseKategori> response) {
@@ -226,9 +233,7 @@ public class TulisFragment extends Fragment {
 
                     }
 
-//                    adapter = new ArrayAdapter<String>(getActivity(),
-//                            android.R.layout.simple_dropdown_item_1line, listSpinner);
-//                    mySpinner.setAdapter(adapter);
+
                     mySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

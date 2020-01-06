@@ -71,7 +71,7 @@ public class MasukanActivity extends AppCompatActivity {
         ab.setTitle("Kirim Masukan Anda");
         ab.setDisplayHomeAsUpEnabled(true);
 
-        sm = new SessionManager(MasukanActivity.this);
+//        sm = new SessionManager(MasukanActivity.this);
 
 
         arEditor = this.findViewById(R.id.areditor);
@@ -113,9 +113,9 @@ public class MasukanActivity extends AppCompatActivity {
     private void sendMasukan(){
         map = sm.getLogged();
         String masukan = arEditor.getHtml();
-        String id = map.get(sm.SES_ID);
-        String token = map.get(sm.SES_TOKEN);
-        Call<ResponseNull> push = apiServices.postMasukan(id,token,masukan);
+//        String id = map.get(sm.SES_ID);
+//        String token = map.get(sm.SES_TOKEN);
+        Call<ResponseNull> push = apiServices.postMasukan(masukan);
         push.enqueue(new Callback<ResponseNull>() {
             @Override
             public void onResponse(Call<ResponseNull> call, Response<ResponseNull> response) {

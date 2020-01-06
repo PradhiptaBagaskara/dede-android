@@ -17,10 +17,10 @@ import com.ruvio.reawrite.adapter.SessionManager;
 import com.squareup.picasso.Picasso;
 
 public class DetailCeritaActivity extends AppCompatActivity {
-    TextView deskripsi,author;
+    TextView deskripsi,author,ukm;
     ImageView img;
     Button btnBaca;
-    String iJudul,iAuthor,iImg,iDiskripsi,iIsi;
+    String iJudul,iAuthor,iImg,iDiskripsi,iIsi,iUkm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +33,20 @@ public class DetailCeritaActivity extends AppCompatActivity {
             iImg =  bundle.getString("img");
             iDiskripsi = bundle.getString("diskripsi");
             iIsi = bundle.getString("isi");
+            iUkm = bundle.getString("ukm");
+
         }else {
             iJudul = bundle.getString("judul");
             iAuthor = bundle.getString("penulis");
             iImg =  bundle.getString("img");
             iDiskripsi = bundle.getString("diskripsi");
             iIsi = bundle.getString("isi");
+            iUkm = bundle.getString("ukm");
+
         }
 
-        SessionManager sm = new SessionManager(DetailCeritaActivity.this);
-        sm.checkLogin();
+//        SessionManager sm = new SessionManager(DetailCeritaActivity.this);
+//        sm.checkLogin();
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -50,12 +54,13 @@ public class DetailCeritaActivity extends AppCompatActivity {
         ab.setTitle(bundle.getString("judul"));
 
 
-
+        ukm = (TextView) findViewById(R.id.ukmName);
         deskripsi= (TextView) findViewById(R.id.diskripsi);
         author = (TextView) findViewById(R.id.author);
         img = (ImageView) findViewById(R.id.imgDetail);
         btnBaca = (Button) findViewById(R.id.btnBacaCerita);
 
+        ukm.setText(iUkm);
         author.setText(iAuthor);
         deskripsi.setText(iDiskripsi);
         btnBaca.setOnClickListener(new View.OnClickListener() {

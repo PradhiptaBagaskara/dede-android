@@ -14,7 +14,10 @@ public interface KategoriServices {
     Call<ResponseKategori> getKategoriResponse();
 
     @FormUrlEncoded
+    @POST("api/kategori")
+    Call<ResponseKategori> getKategoriForm(@Field("id_user") String iduser);
+
+    @FormUrlEncoded
     @POST("api/order_by_kategori")
-    Call<ResponseById> postById(@Field("id_kategori") String idKategori,
-                                @Field("auth_key") String token);
+    Call<ResponseById> postById(@Field("id_kategori") String idKategori);
 }

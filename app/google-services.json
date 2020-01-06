@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "500909723403",
+    "firebase_url": "https://emading-75277.firebaseio.com",
+    "project_id": "emading-75277",
+    "storage_bucket": "emading-75277.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500909723403:android:7aaf23f3f4dfec5fe65c0e",
+        "android_client_info": {
+          "package_name": "com.ruvio.reawrite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500909723403-dih4skbfhvmdnqcfrpr18gmj46r96q9l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ruvio.reawrite",
+            "certificate_hash": "c9e4af9ed391f066f122a24cbdbeb67f32f730f7"
+          }
+        },
+        {
+          "client_id": "500909723403-01vp0l0593dp1nrm0csq63iuvr0fv87d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFGAfefLzOgBpGOyxa69x_rHV6twU_sZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500909723403-01vp0l0593dp1nrm0csq63iuvr0fv87d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

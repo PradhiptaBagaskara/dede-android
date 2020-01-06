@@ -61,11 +61,10 @@ public class HomeFragment extends Fragment {
         recyclerView.addItemDecoration(new GridMarginDecoration(getActivity(), 2, 2, 2, 2));
         sm = new SessionManager(getActivity());
 
-        sm.checkLogin();
-        sesi = sm.getLogged();
-        key = sesi.get(sm.SES_TOKEN);
+//        sm.checkLogin();
+//        sesi = sm.getLogged();
+//        key = sesi.get(sm.SES_TOKEN);
 
-        Log.d("sesi", "onCreateView: " + key);
         apiServices = InitRetro.InitApi().create(ApiServices.class);
         showProgress();
         loadCerita();
@@ -177,6 +176,8 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("isi", getCeritaItems.get(position).getIsi());
                     intent.putExtra("img", urlGambarBerita);
                     intent.putExtra("judul", getCeritaItems.get(position).getJudul());
+                    intent.putExtra("ukm", getCeritaItems.get(position).getNamaKategori());
+
                     startActivity(intent);
                 }
             });

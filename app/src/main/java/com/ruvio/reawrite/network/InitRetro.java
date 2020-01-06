@@ -5,7 +5,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class InitRetro {
-    public static String API_URL = "https://reawrite.000webhostapp.com/";
+    public static String API_URL = "https://emading-umpo.000webhostapp.com/";
+//    public static String API_URL = "http://192.168.0.16/";
+
     private  static Retrofit retrofit = null;
 
     public static Retrofit InitApi() {

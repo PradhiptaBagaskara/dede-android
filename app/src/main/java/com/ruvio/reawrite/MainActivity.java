@@ -1,13 +1,16 @@
 package com.ruvio.reawrite;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -19,11 +22,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ruvio.reawrite.activity.MasukanActivity;
 import com.ruvio.reawrite.activity.ProfilSettingActivity;
 import com.ruvio.reawrite.adapter.SessionManager;
 import com.ruvio.reawrite.home.HomeFragment;
 import com.ruvio.reawrite.kategori.KategoriFragment;
+import com.ruvio.reawrite.login.LoginActivity;
 import com.ruvio.reawrite.profile.ProfileFragment;
 import com.ruvio.reawrite.tulis.TulisFragment;
 
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swp;
     private int aktifFragment;
     SessionManager sm;
+    int rule;
 
 
     @Override
@@ -43,13 +49,22 @@ public class MainActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorAccent)));
         ab.show();
+        Window window = MainActivity.this.getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(getApplicationContext(),R.color.content));
 
         sm = new SessionManager(MainActivity.this);
-        sm.checkLogin();
-        if (sm.Login()){
-            halaman(0);
+//        sm.checkLogin();
 
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("NotifApps", "NotifApps",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
         }
+
 
 
 
@@ -57,26 +72,39 @@ public class MainActivity extends AppCompatActivity {
         swp = (SwipeRefreshLayout) findViewById(R.id.swiprefresh);
 
 
-        setActionBar(0);
+        setActionBar(0, rule);
 
 //        Set Default Halaman
         BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
 
+        if (sm.Login()){
+            rule = 0;
+            halaman(0, 0);
+            bottomNavigationBar
+                    .addItem(new BottomNavigationItem(R.drawable.ic_home_white_24dp, "Home"))
+                    .addItem(new BottomNavigationItem(R.drawable.ic_book_white_24dp, "UKM"))
+                    .addItem(new BottomNavigationItem(R.drawable.ic_tulis, "Tulis"))
+                    .addItem(new BottomNavigationItem(R.drawable.ic_person, "Profil"))
+                    .setFirstSelectedPosition(0)
+                    .initialise();
+        }else {
+            rule = 1;
+            halaman(0,rule);
+            bottomNavigationBar
+                    .addItem(new BottomNavigationItem(R.drawable.ic_home_white_24dp, "Home"))
+                    .addItem(new BottomNavigationItem(R.drawable.ic_book_white_24dp, "UKM"))
+                    .setFirstSelectedPosition(0)
+                    .initialise();
+        }
 //        Init halaman Untuk menu Bottom Nav
-        bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.ic_home_white_24dp, "Home"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_book_white_24dp, "Kategori"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_tulis, "Tulis"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_person, "Profil"))
-                .setFirstSelectedPosition(0)
-                .initialise();
+
 //        bottomNavigationBar.setAutoHideEnabled(false);
 
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
-                halaman(position);
-                setActionBar(position);
+                halaman(position, rule);
+                setActionBar(position, rule);
                 aktifFragment = position;
 
             }
@@ -101,123 +129,160 @@ public class MainActivity extends AppCompatActivity {
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
-    public void setActionBar(int position){
+    public void setActionBar(int position, int rule){
         ActionBar ab = getSupportActionBar();
+        if (rule == 0) {
 
-        switch (position){
-            case 0:
-                ab.setDisplayShowHomeEnabled(true);
-                ab.setLogo(R.drawable.ic_toolbar);
-                ab.setDisplayUseLogoEnabled(true);
-                ab.setDisplayShowTitleEnabled(false);
+            switch (position) {
+                case 0:
+                    ab.setDisplayShowHomeEnabled(true);
+                    ab.setLogo(R.drawable.tulisan_logo);
+                    ab.setDisplayUseLogoEnabled(true);
+                    ab.setDisplayShowTitleEnabled(false);
 //                setActionBarTitle("Reawrite");
-                break;
-            case 1:
-                ab.setDisplayShowHomeEnabled(true);
-                ab.setLogo(R.drawable.ic_toolbar);
-                ab.setDisplayUseLogoEnabled(true);
-                ab.setDisplayShowTitleEnabled(false);
-                break;
-            case 2:
-                ab.setDisplayShowHomeEnabled(true);
-                ab.setLogo(R.drawable.ic_toolbar);
-                ab.setDisplayUseLogoEnabled(true);
-                ab.setDisplayShowTitleEnabled(false);
-                break;
-            case 3:
-                ab.setDisplayShowHomeEnabled(true);
-                ab.setLogo(R.drawable.ic_toolbar);
-                ab.setDisplayUseLogoEnabled(true);
-                ab.setDisplayShowTitleEnabled(false);
-                break;
+                    break;
+                case 1:
+                    ab.setDisplayShowHomeEnabled(true);
+                    ab.setLogo(R.drawable.tulisan_logo);
+                    ab.setDisplayUseLogoEnabled(true);
+                    ab.setDisplayShowTitleEnabled(false);
+                    break;
+                case 2:
+                    ab.setDisplayShowHomeEnabled(true);
+                    ab.setLogo(R.drawable.tulisan_logo);
+                    ab.setDisplayUseLogoEnabled(true);
+                    ab.setDisplayShowTitleEnabled(false);
+                    break;
+                case 3:
+                    ab.setDisplayShowHomeEnabled(true);
+                    ab.setLogo(R.drawable.tulisan_logo);
+                    ab.setDisplayUseLogoEnabled(true);
+                    ab.setDisplayShowTitleEnabled(false);
+                    break;
+            }
+        }else {
+            switch (position) {
+                case 0:
+                    ab.setDisplayShowHomeEnabled(true);
+                    ab.setLogo(R.drawable.tulisan_logo);
+                    ab.setDisplayUseLogoEnabled(true);
+                    ab.setDisplayShowTitleEnabled(false);
+//                setActionBarTitle("Reawrite");
+                    break;
+                case 1:
+                    ab.setDisplayShowHomeEnabled(true);
+                    ab.setLogo(R.drawable.tulisan_logo);
+                    ab.setDisplayUseLogoEnabled(true);
+                    ab.setDisplayShowTitleEnabled(false);
+                    break;
+
+            }
+
         }
+
     }
 
 
-    private void halaman(int index){
+    private void halaman(int index, int rule){
         Fragment frg = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
         String tag;
-        switch (index){
-            case 0:
-                HomeFragment homeFragment = new HomeFragment();
-                fragment = homeFragment;
-                tag = "HOME_FRAGMENT";
-                Log.d("jalan", "halaman: home");
-                break;
-            case 1:
-                KategoriFragment kategoriFragment= new KategoriFragment();
-                fragment = kategoriFragment;
-                tag = "KATEGORI_FRAGMENT";
-                Log.d("jalan", "halaman: kategori");
 
-                break;
-            case 2:
-                TulisFragment tulisFragment = new TulisFragment();
-                fragment = tulisFragment;
-                tag ="TULIS_FRAGMENT";
-                Log.d("jalan", "halaman: tulis");
+        if (rule == 0){
+            switch (index){
+                case 0:
+                    HomeFragment homeFragment = new HomeFragment();
+                    fragment = homeFragment;
+                    tag = "HOME_FRAGMENT";
+                    Log.d("jalan", "halaman: home");
+                    break;
+                case 1:
+                    KategoriFragment kategoriFragment= new KategoriFragment();
+                    fragment = kategoriFragment;
+                    tag = "KATEGORI_FRAGMENT";
+                    Log.d("jalan", "halaman: kategori");
 
-                break;
-            case 3:
-                ProfileFragment profileFragment = new ProfileFragment();
-                fragment = profileFragment;
-                tag ="PROFIL_FRAGMENT";
-                break;
-            default:
-                fragment = null;
-                tag = null;
+                    break;
+                case 2:
+                    TulisFragment tulisFragment = new TulisFragment();
+                    fragment = tulisFragment;
+                    tag ="TULIS_FRAGMENT";
+                    Log.d("jalan", "halaman: tulis");
+
+                    break;
+                case 3:
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    fragment = profileFragment;
+                    tag ="PROFIL_FRAGMENT";
+                    break;
+                default:
+                    fragment = null;
+                    tag = null;
+            }
+        }
+        else {
+            switch (index){
+                case 0:
+                    HomeFragment homeFragment = new HomeFragment();
+                    fragment = homeFragment;
+                    tag = "HOME_FRAGMENT";
+                    Log.d("jalan", "halaman: home");
+                    break;
+                case 1:
+                    KategoriFragment kategoriFragment= new KategoriFragment();
+                    fragment = kategoriFragment;
+                    tag = "KATEGORI_FRAGMENT";
+                    Log.d("jalan", "halaman: kategori");
+
+                    break;
+
+                default:
+                    fragment = null;
+                    tag = null;
+            }
         }
         fragmentManager.beginTransaction()
                 .replace(R.id.fl_container, fragment, tag)
                 .commit();
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.setting) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//
-//        MenuItem settingsItem = menu.findItem(R.id.setting);
-//        // set your desired icon here based on a flag if you like
-//        settingsItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_settings));
-//
-//        return super.onPrepareOptionsMenu(menu);
-//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-
-        menuInflater.inflate(R.menu.menu_umum, menu);
+        if (rule == 0) {
+            menuInflater.inflate(R.menu.menu_umum, menu);
+        }else {
+            menuInflater.inflate(R.menu.menu_no_login, menu);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent;
-        switch (item.getItemId()){
-            case R.id.btnMasukan:
-                 intent =new Intent(this, MasukanActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.settingProfil:
-                intent =new Intent(this, ProfilSettingActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.btnLogout:
-                sm.logout();
-                break;
+        if (rule == 0){
+            switch (item.getItemId()){
+//                case R.id.btnMasukan:
+//                    intent =new Intent(this, MasukanActivity.class);
+//                    startActivity(intent);
+//                    break;
+                case R.id.settingProfil:
+                    intent = new Intent(this, ProfilSettingActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.btnLogout:
+                    sm.logout();
+                    break;
+            }
+
+        }else {
+            switch (item.getItemId()){
+                case R.id.settingProfil:
+                    intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+
         }
         return false;
     }

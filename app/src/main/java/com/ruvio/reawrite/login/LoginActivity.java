@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.ruvio.reawrite.MainActivity;
@@ -81,6 +83,9 @@ public class LoginActivity extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.hide();
+
+        Window window = LoginActivity.this.getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(getApplicationContext(),R.color.content));
         apiServices = InitRetro.InitApi().create(ApiServices.class);
         mEmailView = (EditText) findViewById(R.id.etEmail);
 
@@ -125,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String email = ab.get(0).getEmail();
                                     String id_user = ab.get(0).getIdUser();
                                     String username = ab.get(0).getUsername();
-                                    String nama = ab.get(0).getUsername();
+                                    String nama = ab.get(0).getNamaUser();
                                     String auth = ab.get(0).getAuthKey();
                                     String poto = ab.get(0).getFotoUser();
                                     Log.d("tag", "onResponse: " + poto);
@@ -166,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();

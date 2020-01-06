@@ -12,10 +12,10 @@
                 android:id="@+id/settingProfil"
                 android:icon="@drawable/ic_account_setting"
                 android:title="Setting Profil"/>
-            <item
-                android:id="@+id/btnMasukan"
-                android:icon="@drawable/ic_menu_masukan"
-                android:title="Beri Masukan"/>
+<!--            <item-->
+<!--                android:id="@+id/btnMasukan"-->
+<!--                android:icon="@drawable/ic_menu_masukan"-->
+<!--                android:title="Beri Masukan"/>-->
             <item
                 android:id="@+id/btnLogout"
                 android:icon="@drawable/ic_logout"

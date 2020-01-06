@@ -7,10 +7,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="350dp">
+        android:layout_height="325dp">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="325dp"
+            android:layout_height="300dp"
             android:background="@drawable/background_gradient">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,42 +40,14 @@
                 <RelativeLayout
                     android:layout_width="300dp"
                     android:background="@color/bgPutih"
+                    android:layout_marginTop="30dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_height="1dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="BIO"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:typeface="serif"
-                    android:textColor="@color/bgPutih"
-                    android:textAlignment="center"
-                    />
 
-                <androidx.core.widget.NestedScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingBottom="5dp">
-
-                    <TextView
-                        android:id="@+id/bio"
-                        android:layout_width="250dp"
-                        android:layout_height="55dp"
-                        android:text="@string/lorem"
-                        android:textAlignment="center"
-                        android:textColor="@color/bgPutih"
-                        android:textSize="12sp"
-                        android:typeface="serif" />
-                </androidx.core.widget.NestedScrollView>
 
                 <RelativeLayout
                     android:layout_width="300dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="15dp"
                     android:background="@color/bgPutih"
                     android:layout_gravity="center_horizontal"
                     android:layout_height="1dp"/>
@@ -83,7 +55,7 @@
 
 
         </RelativeLayout>
-        <Button
+        <TextView
             android:id="@+id/btnLogout"
             android:layout_width="150dp"
             android:layout_marginBottom="1dp"
@@ -91,6 +63,7 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:background="@drawable/button_select"
+            android:textAlignment="center"
             android:text="followers"
             android:textColor="@color/content" />
 

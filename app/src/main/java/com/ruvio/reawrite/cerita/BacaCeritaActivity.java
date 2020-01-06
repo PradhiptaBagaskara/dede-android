@@ -37,8 +37,8 @@ public class BacaCeritaActivity extends AppCompatActivity {
         iDiskripsi = bundle.getString("diskripsi");
         iIsi = bundle.getString("isi");
 
-        SessionManager sm = new SessionManager(BacaCeritaActivity.this);
-        sm.checkLogin();
+//        SessionManager sm = new SessionManager(BacaCeritaActivity.this);
+//        sm.checkLogin();
 
 
 

@@ -47,8 +47,8 @@ public class KategoriFragment extends Fragment {
 
         ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
         ab.show();
-        SessionManager sm = new SessionManager(getActivity());
-        sm.checkLogin();
+//        SessionManager sm = new SessionManager(getActivity());
+//        sm.checkLogin();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleKategori);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
