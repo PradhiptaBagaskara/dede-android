@@ -2,7 +2,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/bgPutih">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -75,7 +74,7 @@
                             android:layout_height="wrap_content"
                             android:typeface="serif"
                             android:textStyle="bold"
-                            android:text="Kategori"
+                            android:text="UKM"
                             android:textSize="14sp"/>
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -84,8 +83,7 @@
                             android:layout_margin="10dp"
                             android:layout_height="50dp">
 
-                            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical">
@@ -95,7 +93,7 @@
                                     android:layout_height="wrap_content"
                                     android:background="@null"
                                     android:textColorHint="#05ab9a"
-                                    android:hint="Pilih Kategori" />
+                                    android:hint="Pilih UKM" />
 
                             </LinearLayout>
 
